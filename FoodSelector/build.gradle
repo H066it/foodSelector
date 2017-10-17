@@ -28,14 +28,16 @@ configurations {
 }
 
 dependencies {
-//	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-//	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
 //	compile('org.springframework.boot:spring-boot-starter-security')
 //	compile('org.springframework.boot:spring-boot-starter-social-facebook')
 
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
 	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.5.15'
+	
+	runtime("com.h2database:h2")
 	
 	compileOnly('org.projectlombok:lombok')
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
