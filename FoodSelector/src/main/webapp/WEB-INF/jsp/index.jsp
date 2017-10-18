@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/modal/modal.jsp" %>
 <!DOCTYPE HTML>
 <!--
 	Snapshot by TEMPLATED
@@ -12,6 +13,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
 	</head>
 	<body>
 		<div class="page-wrap">
@@ -35,6 +37,7 @@
 								<p><a href="https://templated.co">무엇</a>을 드실지 고민이신가요?</p>
 								<ul class="actions">
 									<li><a href="#galleries" class="button alt scrolly big">Continue</a></li>
+									<a href="#foodModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
 								</ul>
 							</div>
 						</section>
@@ -134,6 +137,7 @@
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
 
 	</body>
 </html>
