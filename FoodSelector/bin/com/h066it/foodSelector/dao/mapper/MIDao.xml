@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.h066it.foodSelector.dao.IDao">
+	
+	<!-- modal info 관련 -->
+	
+	<select id="foodInfo" parameterType="int" resultType="com.h066it.foodSelector.dto.FoodDto">
+		SELECT * FROM food WHERE fId = #{fId}
+	</select>
+	
+	<!-- CRUD 관련 -->
+	
+	<select id="list" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT bId, bTitle, bWriter, bContent, bDate
+		FROM fsBoard
+		ORDER BY bId DESC
+	</select>
+	
+	<insert id="write">
+		INSERT INTO fsBoard (bId, bTitle, bWriter, bPassword, bContent)
+		VALUES(fs_bId.nextval, #{bTitle}, #{bWriter}, #{bPassword}, #{bContent})
+	</insert>
+	
+	<select id="view" parameterType="int" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT bId, bTitle, bWriter, bPassword, bContent, bDate
+		FROM fsBoard
+		WHERE bId = #{bId}
+	</select>
+	
+	<update id="update" parameterType="com.h066it.foodSelector.dto.ContentDto">
+		UPDATE fsBoard
+		SET bTitle = #{bTitle}, bContent = #{bContent}
+		WHERE bId = #{bId}
+	</update>
+	
+	<delete id="delete" parameterType="com.h066it.foodSelector.dto.ContentDto">
+		DELETE FROM fsBoard
+		WHERE bId = #{bId} AND bPassword = #{bPassword}
+	</delete>
+	
+	<select id="udtPwdChk" parameterType="com.h066it.foodSelector.dto.ContentDto" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT bId
+		FROM fsBoard
+		WHERE bId = #{bId}
+		AND bPassword = #{bPassword}
+	</select>
+	
+</mapper>

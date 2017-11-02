@@ -28,7 +28,6 @@ configurations {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 //	compile('org.springframework.boot:spring-boot-starter-security')
 //	compile('org.springframework.boot:spring-boot-starter-social-facebook')
@@ -37,11 +36,28 @@ dependencies {
 	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
 	compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.5.15'
 	
-	runtime("com.h2database:h2")
+//	runtime("com.h2database:h2")
 	
+	//bootstrap
 	compile group: 'org.webjars', name: 'bootstrap', version: '3.3.7'
 	
-	compile group: 'oracle', name: 'ojdbc6', version: '11.2.0.3'
+	//JDBC configuration
+	compile group: 'com.oracle', name: 'ojdbc14', version: '10.2.0.3.0'
+
+	//Mapper	
+	compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.9'
+
+	//MyBatis
+	compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.3.0'
+	compile group: 'org.mybatis', name: 'mybatis', version: '3.4.1'
+	compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.1'
+
+	//CKEditor
+	compile group: 'org.webjars', name: 'ckeditor', version: '4.7.2'
+	
+	//validation
+	compile group: 'javax.validation', name: 'validation-api', version: '2.0.0.Final'
 
 	compileOnly('org.projectlombok:lombok')
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')

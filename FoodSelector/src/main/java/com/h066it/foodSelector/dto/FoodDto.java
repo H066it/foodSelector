@@ -1,31 +1,27 @@
 package com.h066it.foodSelector.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 public class FoodDto {
 
-	@Id
-	@GeneratedValue
 	private int fId;
 	
-	@Column(unique = true)
 	@NotNull
+	@Size(min = 1, max = 300)
 	private String name;
 	
 	@NotNull
+	@Size(min = 1, max = 1000)
 	private String ingredients;
 	
 	@NotNull
+	@Size(min = 1, max = 10000000)
 	private String recipe;
 	
 	private String tag;

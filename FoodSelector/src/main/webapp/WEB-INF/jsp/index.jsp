@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/modal/modal.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <!--
 	Snapshot by TEMPLATED
@@ -23,6 +24,7 @@
 					<ul>
 						<li><a href="index.html" class="active"><span class="icon fa-home"></span></a></li>
 						<li><a href="gallery.html"><span class="icon fa-camera-retro"></span></a></li>
+						<li><a href="list.html"><span class="icon fa-commenting-o"></span></a></li>
 						<li><a href="generic.html"><span class="icon fa-file-text-o"></span></a></li>
 					</ul>
 				</nav>
@@ -38,6 +40,9 @@
 								<ul class="actions">
 									<li><a href="#galleries" class="button alt scrolly big">Continue</a></li>
 									<a href="#foodModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+									<c:out value="${aa.name }"></c:out>
+									<c:out value="${aa.ingredients }"></c:out>
+									<c:out value="${aa.recipe }"></c:out>
 								</ul>
 							</div>
 						</section>

@@ -1,14 +1,25 @@
 package com.h066it.foodSelector.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.h066it.foodSelector.dto.ContentDto;
+import com.h066it.foodSelector.service.ServiceModel;
 
 @Controller
 public class HomeController {
 
+	@Autowired
+	private ServiceModel service; 
+	
 	@RequestMapping("/index")
-	public String index() {
+	public String index(Model model) {
 		
+		model.addAttribute("aa", service.foodInfo(1));
 		return "index";
 	}
 	
@@ -18,6 +29,14 @@ public class HomeController {
 		return "gallery";
 	}
 	
+	@RequestMapping("/list")
+	public String list(ContentDto dto, Model model) {
+		
+		model.addAttribute("list", service.list());
+		
+		return "/crud/list";
+	}
+
 	@RequestMapping("/generic")
 	public String generic() {
 		
