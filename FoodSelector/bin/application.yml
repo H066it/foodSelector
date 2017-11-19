@@ -8,3 +8,7 @@ spring:
     username: adminfs
     password: vlqkddyd
     driver-class-name: oracle.jdbc.driver.OracleDriver
+  social:
+    facebook:
+      app-id: 133133954075194
+      app-secret: c1acbf70f276b7b18dfddf0d4b9de037

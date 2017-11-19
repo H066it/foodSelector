@@ -31,6 +31,7 @@
 						<li><a href="../gallery.html"><span class="icon fa-camera-retro"></span></a></li>
 						<li><a href="../list.html" class="active"><span class="icon fa-commenting-o"></span></a></li>
 						<li><a href="../generic.html"><span class="icon fa-file-text-o"></span></a></li>
+						<jsp:include page="/WEB-INF/jsp/repeatJsp/logBtn.jsp"></jsp:include>
 					</ul>
 				</nav>
 
@@ -57,10 +58,11 @@
 								</c:if>
 								
 								<form action="${destination }" method="post">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<h3>Title : <input type="text" name="bTitle" value="${dto.BTitle }"></input></h3>
 									
 									<c:if test="${dto.BId == null }">
-										<h4>Writer : <input type="text" name="bWriter"></input></h4>
+										<h4>Writer : <input type="text" name="bWriter" value="${auth }" readonly="readonly"></input></h4>
 										<h4>Password : <input type="password" name="bPassword"></input></h4>
 									</c:if>
 									
@@ -72,7 +74,7 @@
 										
 									<div align="right">
 										<button type="submit" id="subBtn" >저장</button>
-										<a href="#" onclick="history.back();"><button type="button">취소</button></a>
+										<a href="../list"><button type="button">취소</button></a>
 									</div>
 									<script>
 										$(function() {

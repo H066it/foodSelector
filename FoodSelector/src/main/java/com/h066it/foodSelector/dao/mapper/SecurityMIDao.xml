@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.h066it.foodSelector.dao.SecurityIDao">
+	
+	<!-- modal info 관련 -->
+	
+	<select id="memberIdChk" parameterType="string" resultType="com.h066it.foodSelector.dto.MemberDto">
+		SELECT * FROM member WHERE id = #{id}
+	</select>
+	
+	<insert id="signUp">
+		INSERT INTO member (id, username, password)
+		VALUES (#{id}, #{username}, #{password})
+	</insert>
+	
+	<insert id="signUpAuthority" parameterType="string">
+		INSERT INTO authorities (id, authority)
+		VALUES (#{id}, 'ROLE_USER')
+	</insert>
+	
+	<select id="memberAuthChk" parameterType="string" resultType="string">
+		SELECT authority
+		FROM authorities
+		WHERE id = #{id}
+	</select>
+	
+</mapper>

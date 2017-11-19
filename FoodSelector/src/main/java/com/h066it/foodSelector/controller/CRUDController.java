@@ -3,6 +3,7 @@ package com.h066it.foodSelector.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,11 @@ public class CRUDController {
 	private ServiceModel service;
 	
 	@RequestMapping(value="/write", method=RequestMethod.GET)
-	public String write_form(ContentDto dto) {
+	public String write_form(ContentDto dto, Model model, Authentication auth) {
 				
 		System.out.println("write_form");
+		
+		model.addAttribute("auth", auth.getName());
 		
 		return "/crud/form";
 	}

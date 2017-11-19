@@ -1,8 +1,7 @@
 package com.h066it.foodSelector.controller;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +16,12 @@ public class HomeController {
 	private ServiceModel service; 
 	
 	@RequestMapping("/index")
-	public String index(Model model) {
+	public String index(Model model, Authentication auth) {
 		
-		model.addAttribute("aa", service.foodInfo(1));
+		if(auth != null) {
+			model.addAttribute("auth", auth.getName());
+		}
+		
 		return "index";
 	}
 	
