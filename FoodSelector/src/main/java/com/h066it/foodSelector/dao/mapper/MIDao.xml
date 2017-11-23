@@ -13,10 +13,9 @@
 	
 	<!-- CRUD 관련 -->
 	
-	<select id="list" resultType="com.h066it.foodSelector.dto.ContentDto">
-		SELECT bId, bTitle, bWriter, bContent, bDate
+	<select id="count" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT bId
 		FROM fsBoard
-		ORDER BY bId DESC
 	</select>
 	
 	<insert id="write">
@@ -47,5 +46,20 @@
 		WHERE bId = #{bId}
 		AND bPassword = #{bPassword}
 	</select>
+	
+	<select id="list" parameterType="int" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT S.bId, S.bTitle, S.bWriter, S.bContent, S.bDate, S.bCount
+		FROM (SELECT rownum AS rnum, F.bId, F.bTitle, F.bWriter, F.bContent, F.bDate, F.bCount
+				FROM (SELECT bId, bTitle, bWriter, bContent, bDate, bCount
+						FROM fsBoard ORDER BY bId DESC) F
+				WHERE rownum <![CDATA[<=]]> #{lstNum} ) S
+		WHERE S.rnum <![CDATA[>=]]> #{firNum}
+	</select>
+	
+	<update id="clickCount" parameterType="int">
+		UPDATE fsBoard
+		SET bCount = bCount + 1
+		WHERE bId = #{bId}
+	</update>
 	
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.h066it.foodSelector.dto.ContentDto;
 import com.h066it.foodSelector.service.ServiceModel;
+import com.h066it.foodSelector.vo.PageVo;
 
 @Controller
 public class HomeController {
@@ -32,9 +33,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(ContentDto dto, Model model) {
+	public String list(ContentDto dto, Model model, PageVo page) {
 		
-		model.addAttribute("list", service.list());
+		page.calPage(service.count().size());
+		model.addAttribute("pageVo", page);
+						
+		model.addAttribute("list", service.list(page.getFirNum(), page.getLstNum()));
 		
 		return "/crud/list";
 	}

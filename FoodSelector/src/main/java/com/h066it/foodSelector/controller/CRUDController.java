@@ -1,7 +1,5 @@
 package com.h066it.foodSelector.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -44,6 +42,7 @@ public class CRUDController {
 		
 		System.out.println("view = " + bId);
 		
+		service.clickCount(bId);	// Á¶È¸¼ö
 		model.addAttribute("dto", service.view(bId));
 		
 		return "/crud/view";

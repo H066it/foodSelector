@@ -27,11 +27,11 @@ public class ServiceModel implements IDao {
 	/* CRUD ฐüทร */
 	
 	@Override
-	public ArrayList<ContentDto> list() {
+	public ArrayList<ContentDto> count() {
 
 		IDao dao = sqlSession.getMapper(IDao.class);
 		
-		return dao.list();
+		return dao.count();
 	}
 	
 	@Override
@@ -77,4 +77,22 @@ public class ServiceModel implements IDao {
 		return dao.udtPwdChk(bId, bPassword);
 	}
 
+	@Override
+	public ArrayList<ContentDto> list(int firNum, int lstNum) {
+
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		return dao.list(firNum, lstNum);
+	}
+
+	@Override
+	public void clickCount(int bId) {
+
+		IDao dao = sqlSession.getMapper(IDao.class);
+
+		dao.clickCount(bId);
+		
+	}
+
+	
 }

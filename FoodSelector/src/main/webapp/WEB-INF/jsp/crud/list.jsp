@@ -57,6 +57,25 @@
 										</tr>
 									</c:forEach>
 								</table>
+								
+								<div align="center">
+								  <ul class="tabs">
+								    <li><a href="list?page=1">&lt;&lt;</a></li>
+								    <c:if test="${pageVo.firPageNum - 1 > 1}">
+										<li><a href="list?page=${pageVo.firPageNum - 1}">&lt;</a></li>
+									</c:if>
+									<c:forEach begin="${pageVo.firPageNum }"
+										end="${pageVo.lstPageNum }" step="1" varStatus="page">
+										<li><a href="list?page=${pageVo.firPageNum -1 + page.count}">
+												${pageVo.firPageNum -1 + page.count} </a></li>
+									</c:forEach>
+									<c:if test="${pageVo.firPageNum + 10 <= pageVo.totalPageNum}">
+										<li><a href="list?page=${pageVo.firPageNum + 10}">&gt;</a></li>
+									</c:if>
+								    <li><a href="list?page=${pageVo.totalPageNum }">&gt;&gt;</a></li>
+								  </ul>
+								</div>
+																
 								<div align="right">
 									<a href="write"><button>글 쓰기</button></a>
 								</div>
@@ -64,7 +83,7 @@
 						</section>
 
 					<!-- Contact -->
-						<section id="contact">
+						<section id="contact">							
 						</section>
 
 					<!-- Footer -->
@@ -84,6 +103,7 @@
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
 
 </body>
 </html>
