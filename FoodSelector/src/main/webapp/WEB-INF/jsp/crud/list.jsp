@@ -60,30 +60,69 @@
 								
 								<div align="center">
 								  <ul class="tabs">
-								    <li><a href="list?page=1">&lt;&lt;</a></li>
-								    <c:if test="${pageVo.firPageNum - 1 > 1}">
-										<li><a href="list?page=${pageVo.firPageNum - 1}">&lt;</a></li>
-									</c:if>
-									<c:forEach begin="${pageVo.firPageNum }"
-										end="${pageVo.lstPageNum }" step="1" varStatus="page">
-										<li><a href="list?page=${pageVo.firPageNum -1 + page.count}">
-												${pageVo.firPageNum -1 + page.count} </a></li>
-									</c:forEach>
-									<c:if test="${pageVo.firPageNum + 10 <= pageVo.totalPageNum}">
-										<li><a href="list?page=${pageVo.firPageNum + 10}">&gt;</a></li>
-									</c:if>
-								    <li><a href="list?page=${pageVo.totalPageNum }">&gt;&gt;</a></li>
+									  <c:choose>
+									  	<c:when test="${keyword == null }">
+										    <li><a href="list?page=1">&lt;&lt;</a></li>
+										    <c:if test="${pageVo.firPageNum - 1 > 1}">
+												<li><a href="list?page=${pageVo.firPageNum - 1}">&lt;</a></li>
+											</c:if>
+											<c:forEach begin="${pageVo.firPageNum }"
+												end="${pageVo.lstPageNum }" step="1" varStatus="page">
+												<li><a href="list?page=${pageVo.firPageNum -1 + page.count}">
+														${pageVo.firPageNum -1 + page.count} </a></li>
+											</c:forEach>
+											<c:if test="${pageVo.firPageNum + 10 <= pageVo.totalPageNum}">
+												<li><a href="list?page=${pageVo.firPageNum + 10}">&gt;</a></li>
+											</c:if>
+										    <li><a href="list?page=${pageVo.totalPageNum }">&gt;&gt;</a></li>
+									  	</c:when>
+									  	
+									  	<c:when test="${keyword != null }">
+										    <li><a href="search?page=1
+										    	&searchType=${searchType }&keyword=${keyword }">&lt;&lt;</a></li>
+										    <c:if test="${pageVo.firPageNum - 1 > 1}">
+												<li><a href="search?page=${pageVo.firPageNum - 1}
+												&searchType=${searchType }&keyword=${keyword }">&lt;</a></li>
+											</c:if>
+											<c:forEach begin="${pageVo.firPageNum }"
+												end="${pageVo.lstPageNum }" step="1" varStatus="page">
+												<li><a href="search?page=${pageVo.firPageNum -1 + page.count}
+															&searchType=${searchType }&keyword=${keyword }">
+														${pageVo.firPageNum -1 + page.count} </a></li>
+											</c:forEach>
+											<c:if test="${pageVo.firPageNum + 10 <= pageVo.totalPageNum}">
+												<li><a href="search?page=${pageVo.firPageNum + 10}
+															&searchType=${searchType }&keyword=${keyword }">&gt;</a></li>
+											</c:if>
+										    <li><a href="search?page=${pageVo.totalPageNum }
+											    		&searchType=${searchType }&keyword=${keyword }">&gt;&gt;</a></li>
+									  	</c:when>
+									  </c:choose>
 								  </ul>
 								</div>
-																
+													
 								<div align="right">
 									<a href="write"><button>글 쓰기</button></a>
 								</div>
+								
 							</div>
 						</section>
 
 					<!-- Contact -->
-						<section id="contact">							
+						<section id="contact">
+							<div class="full" align="center">
+								<form action="search" method="post">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<select name="searchType" class="field half" style="width: 5em;">
+										<option value="bTitle">제목</option>
+										<option value="bContent">내용</option>
+										<option value="bTitle_bContent">제목+내용</option>
+										<option value="bWriter">작성자</option>
+									</select>
+									<input type="text" name="keyword" class="field half" style="width: 20em;">
+									<input type="submit" value="검색">
+								</form>							
+							</div>
 						</section>
 
 					<!-- Footer -->

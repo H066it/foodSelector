@@ -1,5 +1,7 @@
 package com.h066it.foodSelector.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -23,11 +25,21 @@ public class HomeController {
 			model.addAttribute("auth", auth.getName());
 		}
 		
+		int count = service.foodCount();
+		
+		System.out.println("count = " + count);
+		model.addAttribute("count", count);
+		
 		return "index";
 	}
 	
 	@RequestMapping("/gallery")
-	public String gallery() {
+	public String gallery(Model model) {
+		
+		int count = service.foodCount();
+		
+		System.out.println("count = " + count);
+		model.addAttribute("tags", service.food_tag());
 		
 		return "gallery";
 	}
@@ -47,6 +59,22 @@ public class HomeController {
 	public String generic() {
 		
 		return "generic";
+	}
+	
+	@RequestMapping("/search")
+	public String search(ContentDto dto, HttpServletRequest request, Model model, PageVo page) {
+		
+		String searchType = request.getParameter("searchType");
+		String keyword = request.getParameter("keyword");
+		
+		page.calPage(service.searchCount(searchType, keyword).size());
+		model.addAttribute("pageVo", page);
+		
+		model.addAttribute("list", service.searchList(page.getFirNum(), page.getLstNum(), searchType, keyword));
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("keyword", keyword);
+		
+		return "/crud/list";
 	}
 	
 }

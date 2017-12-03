@@ -46,7 +46,7 @@
 			$('.gallery').each(function() {
 
 				var	$gallery = $(this),
-					$content = $gallery.find('.content');
+					$content = $gallery.find('.test');	// 원래 .content
 
 				// Poptrox.
 					$content.poptrox({

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/modal/modal.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 <!--
 	Snapshot by TEMPLATED
@@ -47,51 +48,25 @@
 										<header>
 											<h1>Gallery</h1>
 											<ul class="tabs">
-												<a href="#foodModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
 												<li><a href="#" data-tag="all" class="button active">All</a></li>
-												<li><a href="#" data-tag="people" class="button">People</a></li>
-												<li><a href="#" data-tag="place" class="button">Places</a></li>
-												<li><a href="#" data-tag="thing" class="button">Things</a></li>
+												<li><a href="#" data-tag="koreanFood" class="button">한식</a></li>
+												<li><a href="#" data-tag="chineseFood" class="button">중식</a></li>
+												<li><a href="#" data-tag="japaneseFood" class="button">일식</a></li>
+												<li><a href="#" data-tag="westernFood" class="button">양식</a></li>
+												<li><a href="#" data-tag="snack" class="button">간식</a></li>
+												<li><a href="#" data-tag="flourBasedFood" class="button">분식</a></li>
 											</ul>
 										</header>
 
 										<div class="content">
-											<div class="media all people">
-												<a href="images/fulls/01.jpg"><img src="images/thumbs/01.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="images/fulls/05.jpg"><img src="images/thumbs/05.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="images/fulls/09.jpg"><img src="images/thumbs/09.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all people">
-												<a href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="images/fulls/06.jpg"><img src="images/thumbs/06.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="images/fulls/10.jpg"><img src="images/thumbs/10.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all people">
-												<a href="images/fulls/03.jpg"><img src="images/thumbs/03.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="images/fulls/07.jpg"><img src="images/thumbs/07.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="images/fulls/11.jpg"><img src="images/thumbs/11.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all people">
-												<a href="images/fulls/04.jpg"><img src="images/thumbs/04.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all place">
-												<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
-											<div class="media all thing">
-												<a href="images/fulls/12.jpg"><img src="images/thumbs/12.jpg" alt="" title="This right here is a caption." /></a>
-											</div>
+<%-- 											<c:forEach var="num" begin="1" end="${count }"> --%>
+											<c:forEach items="${tags }" var="tag" varStatus="num">
+												<div class="media all ${tag.tag }">
+													<a href="#foodModal" role="button" class="btn foodbtn" data-toggle="modal" data-tag="all">
+														<img src="images/thumbs/0${num.count}.jpg" alt="" onclick="transferFId(${num.count});"/>
+													</a>
+												</div>
+											</c:forEach>
 										</div>
 								</div>
 						</section>
@@ -152,6 +127,38 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
+			<script src="assets/js/transferInfo.js"></script>
+			
+			<script type="text/javascript">
+				$(".foodbtn").bind("click", function() {
+					$.ajaxSetup({
+						headers: {
+				            'X-CSRF-TOKEN': $("#csrfParam").val(),
+				            'Content-Type': 'application/json;charset=UTF-8'
+				        }
+				    });
+					
+					var data = {
+						'fId' : $("#fId").val()
+					}
+					
+					$.ajax({
+						url : "/food_info",
+						type : "post",
+						data : JSON.stringify(data),
+						success : function(data){							
+							$("#myModalLabel").html(data.fname);
+							$("#ingredients").html(data.ingredients);
+							$("#recipe").html(data.recipe);
+							
+							if(!data){
+			                    alert("정보가 미등록 된 상태입니다.");
+			                    return false;
+			                }
+						}						
+					});				
+				});
+			</script>
 
 	</body>
 </html>

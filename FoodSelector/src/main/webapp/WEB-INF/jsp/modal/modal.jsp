@@ -11,20 +11,25 @@
 		<div class="modal-dialog modal-lg" style="background-color: white;">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">음식이름 db에서 가져올 것</h3>
+			<h3>이름</h3>
+			<p id="myModalLabel"></p>
 		</div>
 		<div class="modal-body">
 			<h4>재료</h4>
-			<p>db에서 가져올 것. 블라블라.</p>
+			<p id="ingredients"></p>
 			<br>
 			<h4>만드는 법</h4>
-			<p>db에서 가져올 것. 블라블라.</p>
+			<p id="recipe"></p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn btn-primary">Save changes</button>
 			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 		</div>
 		</div>
+		<form method="post" class="form-horizontal">			
+			<input type="hidden" id="csrfParam" name="_csrf" value="${_csrf.token}"/>
+			<input type="hidden" id="fId" name="fId" />
+		</form>
 	</div>
 </body>
 </html>

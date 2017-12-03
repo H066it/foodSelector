@@ -14,7 +14,7 @@ public class FoodDto {
 	
 	@NotNull
 	@Size(min = 1, max = 300)
-	private String name;
+	private String fname;
 	
 	@NotNull
 	@Size(min = 1, max = 1000)
@@ -24,5 +24,6 @@ public class FoodDto {
 	@Size(min = 1, max = 10000000)
 	private String recipe;
 	
+	@NotNull
 	private String tag;
 }

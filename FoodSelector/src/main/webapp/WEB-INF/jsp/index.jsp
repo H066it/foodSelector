@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/jsp/modal/modal.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="random" class="java.util.Random" scope="application" />
 <!DOCTYPE HTML>
 <!--
 	Snapshot by TEMPLATED
@@ -41,14 +42,14 @@
 								<c:if test="${auth != null }">
 									<h3>반갑습니다, ${auth}님</h3>
 								</c:if>
-						
-								<p><a href="https://templated.co">무엇</a>을 드실지 고민이신가요?</p>
+								<p>
+									<a href="#foodModal" role="button" class="btn foodbtn" data-toggle="modal"
+									 data-tag="all" onclick="transferFId(${random.nextInt(count) + 1 });">
+										<font size="5rem" color="#D1E9F4">무엇</font>
+									</a>을 드실지 고민이신가요?
+								</p>
 								<ul class="actions">
 									<li><a href="#galleries" class="button alt scrolly big">Continue</a></li>
-									<a href="#foodModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
-									<c:out value="${aa.name }"></c:out>
-									<c:out value="${aa.ingredients }"></c:out>
-									<c:out value="${aa.recipe }"></c:out>
 								</ul>
 							</div>
 						</section>
@@ -62,30 +63,13 @@
 										<h2>ᕕ( ᐛ )ᕗ메뉴를 선택해주세요٩( ᐛ )و</h2>
 									</header>
 									<div class="content">
-										<div class="media">
-											<a href="images/fulls/01.jpg"><img src="images/thumbs/01.jpg" alt="" title="한식" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt="" title="중식" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/03.jpg"><img src="images/thumbs/03.jpg" alt="" title="일식" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/04.jpg"><img src="images/thumbs/04.jpg" alt="" title="분식" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/05.jpg"><img src="images/thumbs/05.jpg" alt="" title="고기" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/06.jpg"><img src="images/thumbs/06.jpg" alt="" title="치킨" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/07.jpg"><img src="images/thumbs/07.jpg" alt="" title="라면" /></a>
-										</div>
-										<div class="media">
-											<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt="" title="기타" /></a>
-										</div>
+										<c:forEach var="num" begin="1" end="${count }">
+											<div class="media all people">
+												<a href="#foodModal" role="button" class="btn foodbtn" data-toggle="modal" data-tag="all">
+													<img src="images/thumbs/0${num}.jpg" alt="" onclick="transferFId(${num});"/>
+												</a>
+											</div>
+										</c:forEach>
 									</div>
 									<footer>
 										<a href="gallery.html" class="button big">모두 보기</a>
@@ -149,6 +133,38 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
+			<script src="assets/js/transferInfo.js"></script>
+			
+			<script type="text/javascript">
+				$(".foodbtn").bind("click", function() {
+					$.ajaxSetup({
+						headers: {
+				            'X-CSRF-TOKEN': $("#csrfParam").val(),
+				            'Content-Type': 'application/json;charset=UTF-8'
+				        }
+				    });
+					
+					var data = {
+						'fId' : $("#fId").val()
+					}
+					
+					$.ajax({
+						url : "/food_info",
+						type : "post",
+						data : JSON.stringify(data),
+						success : function(data){							
+							$("#myModalLabel").html(data.fname);
+							$("#ingredients").html(data.ingredients);
+							$("#recipe").html(data.recipe);
+							
+							if(!data){
+			                    alert("정보가 미등록 된 상태입니다.");
+			                    return false;
+			                }
+						}						
+					});				
+				});
+			</script>
 
 	</body>
 </html>

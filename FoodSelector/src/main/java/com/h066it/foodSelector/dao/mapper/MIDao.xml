@@ -18,6 +18,15 @@
 		FROM fsBoard
 	</select>
 	
+	<select id="list" parameterType="int" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT S.bId, S.bTitle, S.bWriter, S.bContent, S.bDate, S.bCount
+		FROM (SELECT rownum AS rnum, F.bId, F.bTitle, F.bWriter, F.bContent, F.bDate, F.bCount
+				FROM (SELECT bId, bTitle, bWriter, bContent, bDate, bCount
+						FROM fsBoard ORDER BY bId DESC) F
+				WHERE rownum <![CDATA[<=]]> #{lstNum} ) S
+		WHERE S.rnum <![CDATA[>=]]> #{firNum}
+	</select>
+
 	<insert id="write">
 		INSERT INTO fsBoard (bId, bTitle, bWriter, bPassword, bContent)
 		VALUES(fs_bId.nextval, #{bTitle}, #{bWriter}, #{bPassword}, #{bContent})
@@ -29,16 +38,17 @@
 		WHERE bId = #{bId}
 	</select>
 	
+	<update id="clickCount" parameterType="int">
+		UPDATE fsBoard
+		SET bCount = bCount + 1
+		WHERE bId = #{bId}
+	</update>
+
 	<update id="update" parameterType="com.h066it.foodSelector.dto.ContentDto">
 		UPDATE fsBoard
 		SET bTitle = #{bTitle}, bContent = #{bContent}
 		WHERE bId = #{bId}
 	</update>
-	
-	<delete id="delete" parameterType="com.h066it.foodSelector.dto.ContentDto">
-		DELETE FROM fsBoard
-		WHERE bId = #{bId} AND bPassword = #{bPassword}
-	</delete>
 	
 	<select id="udtPwdChk" parameterType="com.h066it.foodSelector.dto.ContentDto" resultType="com.h066it.foodSelector.dto.ContentDto">
 		SELECT bId
@@ -46,20 +56,59 @@
 		WHERE bId = #{bId}
 		AND bPassword = #{bPassword}
 	</select>
+
+	<delete id="delete" parameterType="com.h066it.foodSelector.dto.ContentDto">
+		DELETE FROM fsBoard
+		WHERE bId = #{bId} AND bPassword = #{bPassword}
+	</delete>
 	
-	<select id="list" parameterType="int" resultType="com.h066it.foodSelector.dto.ContentDto">
+	<!-- search 관련 -->
+	
+	<select id="searchCount" resultType="com.h066it.foodSelector.dto.ContentDto">
+		SELECT bId
+		FROM fsBoard
+		WHERE 
+		<choose>
+			<when test="searchType.equals('bTitle')">bTitle LIKE '%'||#{keyword}||'%'</when>
+			<when test="searchType.equals('bContent')">bContent LIKE '%'||#{keyword}||'%'</when>
+			<when test="searchType.equals('bTitle_bContent')">bTitle||bContent LIKE '%'||#{keyword}||'%'</when>
+			<when test="searchType.equals('bWriter')">bWriter LIKE '%'||#{keyword}||'%'</when>
+		</choose>
+	</select>
+	
+	<select id="searchList" parameterType="String" resultType="com.h066it.foodSelector.dto.ContentDto">
 		SELECT S.bId, S.bTitle, S.bWriter, S.bContent, S.bDate, S.bCount
 		FROM (SELECT rownum AS rnum, F.bId, F.bTitle, F.bWriter, F.bContent, F.bDate, F.bCount
 				FROM (SELECT bId, bTitle, bWriter, bContent, bDate, bCount
-						FROM fsBoard ORDER BY bId DESC) F
+						FROM fsBoard
+						WHERE
+							<choose>
+								<when test="searchType.equals('bTitle')">bTitle LIKE '%'||#{keyword}||'%'</when>
+								<when test="searchType.equals('bContent')">bContent LIKE '%'||#{keyword}||'%'</when>
+								<when test="searchType.equals('bTitle_bContent')">bTitle||bContent LIKE '%'||#{keyword}||'%'</when>
+								<when test="searchType.equals('bWriter')">bWriter LIKE '%'||#{keyword}||'%'</when>
+							</choose>
+						ORDER BY bId DESC) F
 				WHERE rownum <![CDATA[<=]]> #{lstNum} ) S
 		WHERE S.rnum <![CDATA[>=]]> #{firNum}
 	</select>
 	
-	<update id="clickCount" parameterType="int">
-		UPDATE fsBoard
-		SET bCount = bCount + 1
-		WHERE bId = #{bId}
-	</update>
+	<!-- admin CRUD 관련 -->
+		
+	<insert id="food_write">
+		INSERT INTO food (fId, fname, ingredients, recipe, tag)
+		VALUES (food_fId.nextval, #{fname}, #{ingredients}, #{recipe}, #{tag})
+	</insert>
+	
+	<select id="foodCount" resultType="int">
+		SELECT count(fId)
+		FROM food 
+	</select>
+	
+	<select id="food_tag" resultType="com.h066it.foodSelector.dto.FoodDto">
+		SELECT tag
+		FROM food
+		ORDER BY fId
+	</select>
 	
 </mapper>
