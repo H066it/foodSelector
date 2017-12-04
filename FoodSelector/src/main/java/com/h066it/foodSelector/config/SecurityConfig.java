@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.authorizeRequests()
 					.antMatchers("/**/write*", "/**/update*", "/**/delete*").authenticated()
-					.antMatchers("/admin/write*").access("ROLE_ADMIN")
+					.antMatchers("/**/food_write*").access("ROLE_ADMIN")
 					.antMatchers("/**").permitAll()
 			.and()
 				.sessionManagement()

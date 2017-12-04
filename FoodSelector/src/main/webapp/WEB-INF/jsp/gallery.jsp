@@ -87,7 +87,7 @@
 								</div>
 
 							<!-- Form -->
-								<div class="column">
+								<div class="inner">
 									<h3>Get in Touch</h3>
 									<form action="#" method="post">
 										<div class="field half first">
