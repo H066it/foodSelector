@@ -1,13 +1,18 @@
 package com.h066it.foodSelector.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.h066it.foodSelector.dao.IDao;
 import com.h066it.foodSelector.dto.ContentDto;
+import com.h066it.foodSelector.dto.FileDto;
 import com.h066it.foodSelector.dto.FoodDto;
 
 @Service
@@ -15,6 +20,9 @@ public class ServiceModel implements IDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private TransactionTemplate template;
 	
 	@Override
 	public FoodDto foodInfo(int fId) {
@@ -136,6 +144,54 @@ public class ServiceModel implements IDao {
 		IDao dao = sqlSession.getMapper(IDao.class);
 
 		return dao.food_tag();
+	}
+
+	@Override
+	public void food_writeWithFiles(FoodDto dto, List<FileDto> files) {
+
+		template.execute(new TransactionCallbackWithoutResult() {
+			
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+
+				food_write(dto.getFname(), dto.getIngredients(), dto.getRecipe(), dto.getTag());
+				
+				if(!files.isEmpty()) {
+					for(FileDto file : files) {
+						System.out.println("food_writeWithFiles");
+						System.out.println("file.getFileName() : " + file.getFileName());
+						System.out.println("file.getFileSize() : " + file.getFileSize());
+						
+						file_write(file.getFileName(), file.getFileSize());
+					}
+				}
+				
+			}
+		});
+	}
+
+	@Override
+	public void file_write(String fileName, int fileSize) {
+
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		dao.file_write(fileName, fileSize);
+	}
+
+	@Override
+	public int food_fIdChk() {
+
+		IDao dao = sqlSession.getMapper(IDao.class);
+		
+		return dao.food_fIdChk();
+	}
+
+	@Override
+	public ArrayList<FileDto> fileList() {
+
+		IDao dao = sqlSession.getMapper(IDao.class);
+
+		return dao.fileList();
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.h066it.foodSelector.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.h066it.foodSelector.config.FileUtil;
+import com.h066it.foodSelector.dto.FileDto;
 import com.h066it.foodSelector.dto.FoodDto;
 import com.h066it.foodSelector.service.ServiceModel;
 
@@ -27,11 +31,15 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/food_write", method=RequestMethod.POST)
-	public String food_write(FoodDto dto) {
+	public String food_write(FoodDto dto, List<MultipartFile> files) {
 		
 		System.out.println("admin_write");
 
-		service.food_write(dto.getFname(), dto.getIngredients(), dto.getRecipe(), dto.getTag());
+		int maxFId = service.food_fIdChk() + 1;
+		FileUtil fu = new FileUtil();
+		List<FileDto> savedfiles = fu.saveFiles(files, maxFId);	// 실제 저장은 여기서.
+		
+		service.food_writeWithFiles(dto, savedfiles);	// DB 등록은 여기서.
 		
 		return "redirect:/list";
 	}

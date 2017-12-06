@@ -111,4 +111,18 @@
 		ORDER BY fId
 	</select>
 	
+	<insert id="file_write">
+		INSERT INTO files (fileId, fileName, fileSize, mergedName)
+		VALUES (food_fId.currval, #{fileName}, #{fileSize}, food_fId.currval || '_-_' || #{fileName})
+	</insert>
+	
+	<select id="food_fIdChk" resultType="int">
+		SELECT MAX(fId)
+		FROM food
+	</select>
+	
+	<select id="fileList" resultType="com.h066it.foodSelector.dto.FileDto">
+		SELECT * FROM files ORDER BY fileId
+	</select>
+	
 </mapper>

@@ -12,6 +12,10 @@ spring:
     facebook:
       app-id: 133133954075194
       app-secret: c1acbf70f276b7b18dfddf0d4b9de037
+  http:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 server:
   error:
     whitelabel:

@@ -1,5 +1,7 @@
 package com.h066it.foodSelector.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.h066it.foodSelector.dto.ContentDto;
+import com.h066it.foodSelector.dto.FileDto;
 import com.h066it.foodSelector.service.ServiceModel;
 import com.h066it.foodSelector.vo.PageVo;
 
@@ -19,7 +22,7 @@ public class HomeController {
 	private ServiceModel service; 
 	
 	@RequestMapping("/index")
-	public String index(Model model, Authentication auth) {
+	public String index(Model model, Authentication auth, ArrayList<FileDto> list) {
 		
 		if(auth != null) {
 			model.addAttribute("auth", auth.getName());
@@ -29,17 +32,19 @@ public class HomeController {
 		
 		System.out.println("count = " + count);
 		model.addAttribute("count", count);
+		model.addAttribute("files", service.fileList());
 		
 		return "index";
 	}
 	
 	@RequestMapping("/gallery")
-	public String gallery(Model model) {
+	public String gallery(Model model, ArrayList<FileDto> list) {
 		
 		int count = service.foodCount();
 		
 		System.out.println("count = " + count);
 		model.addAttribute("tags", service.food_tag());
+		model.addAttribute("files", service.fileList());
 		
 		return "gallery";
 	}

@@ -15,15 +15,7 @@
 	<div class="page-wrap">
 
 			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li><a href="index.html"><span class="icon fa-home"></span></a></li>
-						<li><a href="gallery.html"><span class="icon fa-camera-retro"></span></a></li>
-						<li><a href="list.html" class="active"><span class="icon fa-commenting-o"></span></a></li>
-						<li><a href="generic.html"><span class="icon fa-file-text-o"></span></a></li>
-						<jsp:include page="/WEB-INF/jsp/repeatJsp/logBtn.jsp"></jsp:include>
-					</ul>
-				</nav>
+				<jsp:include page="/WEB-INF/jsp/repeatJsp/navbar.jsp"></jsp:include>
 
 			<!-- Main -->
 				<section id="main">
@@ -105,23 +97,6 @@
 									<a href="write"><button>글 쓰기</button></a>
 								</div>
 								
-							</div>
-						</section>
-
-					<!-- Contact -->
-						<section id="contact">
-							<div class="full" align="center">
-								<form action="search" method="post">
-									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-									<select name="searchType" class="field half" style="width: 5em;">
-										<option value="bTitle">제목</option>
-										<option value="bContent">내용</option>
-										<option value="bTitle_bContent">제목+내용</option>
-										<option value="bWriter">작성자</option>
-									</select>
-									<input type="text" name="keyword" class="field half" style="width: 20em;">
-									<input type="submit" value="검색">
-								</form>							
 							</div>
 						</section>
 

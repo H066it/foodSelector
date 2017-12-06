@@ -25,15 +25,7 @@
 	<div class="page-wrap">
 
 			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li><a href="../index.html"><span class="icon fa-home"></span></a></li>
-						<li><a href="../gallery.html"><span class="icon fa-camera-retro"></span></a></li>
-						<li><a href="../list.html" class="active"><span class="icon fa-commenting-o"></span></a></li>
-						<li><a href="../generic.html"><span class="icon fa-file-text-o"></span></a></li>
-						<jsp:include page="/WEB-INF/jsp/repeatJsp/logBtn.jsp"></jsp:include>
-					</ul>
-				</nav>
+				<jsp:include page="/WEB-INF/jsp/repeatJsp/navbar.jsp"></jsp:include>
 
 			<!-- Main -->
 				<section id="main">
@@ -57,7 +49,7 @@
 									<c:url var="destination" value="/${dto.BId }/update"></c:url>
 								</c:if>
 								 --%>
-								<form action="${destination }" method="post">
+								<form action="${destination }" method="post" enctype="multipart/form-data">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									<h3>Name : <input type="text" name="fname" value="${dto.Fname }"></input></h3>
 									<h5>Ingredients : <input type="text" name="ingredients" id="ingredients" value="${dto.ingredients}"></input></h5>
@@ -78,6 +70,7 @@
 											</select>
 									</h5>
 									
+									<input type="file" name="files">파일 10MB 제한.
 										
 									<div align="right">
 										<button type="submit" id="subBtn" >저장</button>
@@ -97,10 +90,6 @@
 								</form>								
 																
 							</div>
-						</section>
-
-					<!-- Contact -->
-						<section id="contact">
 						</section>
 
 					<!-- Footer -->

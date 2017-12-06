@@ -1,11 +1,13 @@
 package com.h066it.foodSelector.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.h066it.foodSelector.dto.ContentDto;
+import com.h066it.foodSelector.dto.FileDto;
 import com.h066it.foodSelector.dto.FoodDto;
 
 @Mapper
@@ -35,5 +37,8 @@ public interface IDao {
 			@Param("recipe") String recipe, @Param("tag") String tag);
 	public int foodCount();	// 단순 개수 샐때
 	public ArrayList<FoodDto> food_tag();	// 태그 가져와서 활용할 때 (이거 하나로 위에꺼 퉁쳐버리고 없애도 됨.)
-	
+	public void food_writeWithFiles(@Param("dto") FoodDto dto, @Param("files") List<FileDto> files);
+	public void file_write(@Param("fileName") String fileName, @Param("fileSize") int fileSize);
+	public int food_fIdChk();
+	public ArrayList<FileDto> fileList();
 }
